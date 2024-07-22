@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Vtool GUI</title>
+    <HTA:APPLICATION
+        APPLICATIONNAME="VTool GUI"
+        ID="VToolGUIProject"
+        VERSION="0.1"
+        BORDER="thin"
+        BORDERSTYLE="complex"
+        ICON="Vtool-GUI.ico"
+        INNERBORDER="no"
+        SCROLL="yes"
+        SCROLLFLAT="yes"
+        SHOWINTASKBAR="yes"
+        SINGLEINSTANCE="yes"
+        WINDOWSTATE="normal">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #292c2f;
+            color: white;
+            padding: 10px 10px;
+            text-align: center;
+            font-size: 20px;
+        }
+        .content {
+            margin-top: 10px;
+            width: 100%;
+        }
+        .button-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .option-button {
+            display: inline-block;
+            width: 32%;
+            margin: 2px 0.2%;
+            padding: 5px 5px;
+            background-color: #636c74;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .option-button-active {
+            display: inline-block;
+            width: 32%;
+            margin: 2px 0.2%;
+            padding: 5px 5px;
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .option-button:hover {
+            background-color: #0056a3;
+        }
+        .option-button-active:hover {
+            background-color: #0056a3;
+        }
+        .settings-button {
+            display: block;
+            width: 100%;
+            background-color: #636c74;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding: 5px 5px;
+        }
+        .settings-button-active {
+            display: block;
+            width: 100%;
+            background-color: #0078D7;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding: 5px 5px;
+        }
+        .settings-button:hover {
+            background-color: #0056a3;
+        }
+        .settings-button-active:hover {
+            background-color: #0056a3;
+        }
+        .input-field {
+            padding: 5px;
+            margin: 2px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .input-label {
+            margin-top: 5px;
+            text-align: center;
+        }
+        .footer {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 20px;
+        }
+        .center-container {
+            text-align: center;
+        }
+        .input-group { 
+            margin-top: 10px; 
+            text-align: 
+            center; 
+        }
+        .divider {
+            border-top: 2px solid #ccc;
+            margin: 10px 0;
+        }
+        #commandSection, #APIChange, #dailyQuotaSection { display: none; }
+    </style>
+</head>
+<body>
+    <div class="header">VTool GUI</div>
+    <div class="content">
+        <div class="button-container">
+            <button class="option-button-active" onclick="showCommandSection()">1 - IP Analysis</button>
+            <button class="option-button">2 - IP Analysis (File Input)</button>
+            <button class="option-button">3 - IP Analysis + Rescan (File Input)</button>
+        </div>
+        <div class="button-container">
+            <button class="option-button">4 - Domain Analysis</button>
+            <button class="option-button">5 - Domain Analysis (File Input)</button>
+            <button class="option-button">6 - Domain Analysis + Rescan (File Input)</button>
+        </div>
+        <div class="button-container">
+            <button class="option-button">7 - Hash Analysis</button>
+            <button class="option-button">8 - Hash Analysis (File Input)</button>
+        </div>
+        <div>
+            <button class="settings-button-active" onclick="showDailyQuotaSection()">D - API Daily Quota</button>
+        </div>
+        <div>
+            <button class="settings-button-active" onclick="showAPIChange()">A - API Key Change</button>
+        </div>
+        <div>
+            <button class="settings-button">S - Settings</button>
+        </div>
+        <div class="divider"></div>
+        <div id="APIChange">
+            <div class="input-label">API Key:</div>
+            <input type="text" id="apiKey" class="input-field" placeholder="Enter your Virus Total API Key here">
+            <div class="center-container">
+                <button class="option-button-active" onclick="saveApiKey()">Save API Key</button>
+            </div>
+        </div>
+        <div id="commandSection">
+            <div class="input-group">
+                <div class="input-label">Paste One or More IPs:</div>
+                <input type="text" id="commandInput" class="input-field" placeholder="Paste one or more IPs">
+                <div class="center-container">
+                <button class="option-button-active" onclick="executeCommand()">Run</button>
+                <button class="option-button-active" onclick="clearOutput()">Clear</button>
+                </div>
+            </div>
+            <pre id="commandOutput"></pre>
+        </div>
+        <div id="dailyQuotaSection">
+            <div class="input-group">
+                <div class="input-label">API Daily Quota:</div>
+                <div class="center-container">
+                <button class="option-button-active" onclick="executeQuotaCommand()">Update</button>
+                </div>
+            </div>
+            <pre id="quotaOutput"></pre>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="footer">
+        For detailed instructions go to <a href="https://github.com/ViniGuiRodri/">VTool GUI - GitHub</a>
+    </div>
+<script type="text/javascript">
+    document.getElementById("APIChange").style.display = "none";
+    document.getElementById("commandSection").style.display = "none";
+    document.getElementById("dailyQuotaSection").style.display = "none";
+
+    function showAPIChange() {
+        var APIChangeDiv = document.getElementById("APIChange");
+        var commandSection = document.getElementById("commandSection");
+        var dailyQuotaSection = document.getElementById("dailyQuotaSection");
+        if (APIChangeDiv.style.display === "none") {
+            APIChangeDiv.style.display = "block";
+            commandSection.style.display = "none";
+            dailyQuotaSection.style.display = "none";
+        } else {
+            APIChangeDiv.style.display = "none";
+        }
+    }
+
+    function showCommandSection() {
+        var commandSection = document.getElementById('commandSection');
+        var APIChangeDiv = document.getElementById("APIChange");
+        var dailyQuotaSection = document.getElementById("dailyQuotaSection");
+        if (commandSection.style.display === 'none') {
+            commandSection.style.display = 'block';
+            APIChangeDiv.style.display = 'none';
+            dailyQuotaSection.style.display = 'none';
+        } else {
+            commandSection.style.display = 'none';
+        }
+    }
+
+    function showDailyQuotaSection() {
+        var dailyQuotaSection = document.getElementById('dailyQuotaSection');
+        var commandSection = document.getElementById('commandSection');
+        var APIChangeDiv = document.getElementById("APIChange");
+        if (dailyQuotaSection.style.display === 'none') {
+            dailyQuotaSection.style.display = 'block';
+            commandSection.style.display = 'none';
+            APIChangeDiv.style.display = 'none';
+        } else {
+            dailyQuotaSection.style.display = 'none';
+        }
+    }
+
+    function trim(str) {
+        return str.replace(/^\s+|\s+$/g, '');
+    }
+
+    function executeCommand() {
+        try {
+            var fso = new ActiveXObject("Scripting.FileSystemObject");
+            if (!fso.FileExists("ApiKey.txt")) {
+                alert("Update Virus Total API");
+                return;
+            }
+            var apiKeyFile = fso.OpenTextFile("ApiKey.txt", 1);
+            var apiKey = apiKeyFile.ReadLine();
+            apiKeyFile.Close();
+
+            var ip = document.getElementById("commandInput").value;
+            ip = trim(ip);
+            if (ip === "") {
+                alert("Please, paste one or more IPs.");
+                return;
+            }
+            var command = "vt.exe ip -k " + apiKey + " --include=_id,as_owner,asn,network,country,last_analysis_stats.harmless,last_analysis_stats.malicious,reputation,tags " + ip;
+
+            var shell = new ActiveXObject("WScript.Shell");
+            var tempFile = "output.txt";
+            shell.Run("cmd /c " + command + " > " + tempFile, 0, true);
+            var file = fso.OpenTextFile(tempFile, 1);
+            var output = file.ReadAll();
+            file.Close();
+            document.getElementById("commandOutput").innerText = output;
+            fso.DeleteFile(tempFile);
+        } catch (e) {
+            alert("Erro: " + e.message);
+        }
+    }
+
+    function executeQuotaCommand() {
+        try {
+            var fso = new ActiveXObject("Scripting.FileSystemObject");
+            if (!fso.FileExists("ApiKey.txt")) {
+                alert("Update Virus Total API");
+                return;
+            }
+            var apiKeyFile = fso.OpenTextFile("ApiKey.txt", 1);
+            var apiKey = apiKeyFile.ReadLine();
+            apiKeyFile.Close();
+
+            var command = "vt.exe user -k " + apiKey + " --include=apikey,email,quotas.api_requests_daily,status " + apiKey;
+
+            var shell = new ActiveXObject("WScript.Shell");
+            var tempFile = "quotaOutput.txt";
+            shell.Run("cmd /c " + command + " > " + tempFile, 0, true);
+            var file = fso.OpenTextFile(tempFile, 1);
+            var output = file.ReadAll();
+            file.Close();
+            document.getElementById("quotaOutput").innerText = output;
+            fso.DeleteFile(tempFile);
+        } catch (e) {
+            alert("Erro: " + e.message);
+        }
+    }
+
+    function clearOutput() {
+        document.getElementById("commandOutput").innerText = "";
+    }
+
+    function saveApiKey() {
+        var apiKey = document.getElementById("apiKey").value;
+        var expectedLength = 64;
+        if (apiKey.length === expectedLength) {
+            var fso = new ActiveXObject("Scripting.FileSystemObject");
+            var file = fso.OpenTextFile("ApiKey.txt", 2, true);
+            file.WriteLine(apiKey);
+            file.Close();
+            alert("API Key saved successfully.");
+        } else {
+            alert("Please enter a valid API Key with 64 characters.");
+        }
+    }
+</script>
+</body>
+</html>
