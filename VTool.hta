@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Specify the character encoding for the HTML document -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- Set the title of the HTML document -->
     <title>Vtool GUI</title>
+    <!-- Define the HTA application properties -->
     <HTA:APPLICATION
-        APPLICATIONNAME="VTool GUI"
-        ID="VToolGUIProject"
-        VERSION="0.1"
-        BORDER="thin"
-        BORDERSTYLE="complex"
-        ICON="Vtool-GUI.ico"
-        INNERBORDER="no"
-        SCROLL="yes"
-        SCROLLFLAT="yes"
-        SHOWINTASKBAR="yes"
-        SINGLEINSTANCE="yes"
-        WINDOWSTATE="normal">
+        APPLICATIONNAME="VTool GUI"  <!-- Name of the application -->
+        ID="VToolGUIProject"         <!-- Unique ID for the application -->
+        VERSION="0.1"                <!-- Version of the application -->
+        BORDER="thin"                <!-- Border thickness of the application window -->
+        BORDERSTYLE="complex"        <!-- Style of the border -->
+        ICON="Vtool-GUI.ico"         <!-- Icon for the application -->
+        INNERBORDER="no"             <!-- Inner border setting -->
+        SCROLL="yes"                 <!-- Enable scrolling -->
+        SCROLLFLAT="yes"             <!-- Enable flat scroll bars -->
+        SHOWINTASKBAR="yes"          <!-- Show the application in the taskbar -->
+        SINGLEINSTANCE="yes"         <!-- Allow only a single instance of the application -->
+        WINDOWSTATE="normal">        <!-- Initial state of the window -->
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -116,21 +119,22 @@
         .center-container {
             text-align: center;
         }
-        .input-group { 
-            margin-top: 10px; 
-            text-align: 
-            center; 
+        .input-group {
+            margin-top: 10px;
+            text-align: center;
         }
         .divider {
             border-top: 2px solid #ccc;
             margin: 10px 0;
         }
+        /* Sections that will be shown/hidden dynamically */
         #commandSection, #APIChange, #dailyQuotaSection { display: none; }
     </style>
 </head>
 <body>
     <div class="header">VTool GUI</div>
     <div class="content">
+        <!-- Buttons for various analysis options -->
         <div class="button-container">
             <button class="option-button-active" onclick="showCommandSection()">1 - IP Analysis</button>
             <button class="option-button">2 - IP Analysis (File Input)</button>
@@ -155,6 +159,7 @@
             <button class="settings-button">S - Settings</button>
         </div>
         <div class="divider"></div>
+        <!-- Section to change API key -->
         <div id="APIChange">
             <div class="input-label">API Key:</div>
             <input type="text" id="apiKey" class="input-field" placeholder="Enter your Virus Total API Key here">
@@ -162,22 +167,24 @@
                 <button class="option-button-active" onclick="saveApiKey()">Save API Key</button>
             </div>
         </div>
+        <!-- Section to input IPs for analysis -->
         <div id="commandSection">
             <div class="input-group">
                 <div class="input-label">Paste One or More IPs:</div>
                 <input type="text" id="commandInput" class="input-field" placeholder="Paste one or more IPs">
                 <div class="center-container">
-                <button class="option-button-active" onclick="executeCommand()">Run</button>
-                <button class="option-button-active" onclick="clearOutput()">Clear</button>
+                    <button class="option-button-active" onclick="executeCommand()">Run</button>
+                    <button class="option-button-active" onclick="clearOutput()">Clear</button>
                 </div>
             </div>
             <pre id="commandOutput"></pre>
         </div>
+        <!-- Section to check API daily quota -->
         <div id="dailyQuotaSection">
             <div class="input-group">
                 <div class="input-label">API Daily Quota:</div>
                 <div class="center-container">
-                <button class="option-button-active" onclick="executeQuotaCommand()">Update</button>
+                    <button class="option-button-active" onclick="executeQuotaCommand()">Update</button>
                 </div>
             </div>
             <pre id="quotaOutput"></pre>
@@ -188,10 +195,12 @@
         For detailed instructions go to <a href="https://github.com/ViniGuiRodri/">VTool GUI - GitHub</a>
     </div>
 <script type="text/javascript">
+    // Hide all sections initially
     document.getElementById("APIChange").style.display = "none";
     document.getElementById("commandSection").style.display = "none";
     document.getElementById("dailyQuotaSection").style.display = "none";
 
+    // Show the API change section
     function showAPIChange() {
         var APIChangeDiv = document.getElementById("APIChange");
         var commandSection = document.getElementById("commandSection");
@@ -205,6 +214,7 @@
         }
     }
 
+    // Show the IP analysis section
     function showCommandSection() {
         var commandSection = document.getElementById('commandSection');
         var APIChangeDiv = document.getElementById("APIChange");
@@ -218,6 +228,7 @@
         }
     }
 
+    // Show the daily quota section
     function showDailyQuotaSection() {
         var dailyQuotaSection = document.getElementById('dailyQuotaSection');
         var commandSection = document.getElementById('commandSection');
@@ -231,10 +242,12 @@
         }
     }
 
+    // Trim whitespace from a string
     function trim(str) {
         return str.replace(/^\s+|\s+$/g, '');
     }
 
+    // Execute IP analysis command
     function executeCommand() {
         try {
             var fso = new ActiveXObject("Scripting.FileSystemObject");
@@ -267,6 +280,7 @@
         }
     }
 
+    // Execute API daily quota command
     function executeQuotaCommand() {
         try {
             var fso = new ActiveXObject("Scripting.FileSystemObject");
@@ -293,10 +307,12 @@
         }
     }
 
+    // Clear the command output
     function clearOutput() {
         document.getElementById("commandOutput").innerText = "";
     }
 
+    // Save the API key
     function saveApiKey() {
         var apiKey = document.getElementById("apiKey").value;
         var expectedLength = 64;
