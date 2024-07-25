@@ -6,9 +6,7 @@ Welcome to Vtool-GUI!
 
 <img src="/Vtool-GUI.png" width="1000">
 
-This project has the purpose to bring a graphic interface for Vtool-CLI version. For more details and instruction on how it works, please go to:
-
-            https://github.com/ViniGuiRodri/Vtool.git](https://github.com/ViniGuiRodri/Vtool-CLI
+This project has the purpose to bring a graphic interface for Vtool-CLI version. For more details and instruction on how it works, please go to: https://github.com/ViniGuiRodri/Vtool.git](https://github.com/ViniGuiRodri/Vtool-CLI
 
 
  ## Honorable Mention
