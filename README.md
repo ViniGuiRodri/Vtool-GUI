@@ -8,9 +8,9 @@ This project has the purpose to bring a graphic interface for Vtool-CLI version.
 
 ### Quick Guide to Obtain an API Key from VirusTotal
 
-Visit the VirusTotal Website:
+Visit the VirusTotal Website: https://www.virustotal.com
              
-             Open your browser and go to the official VirusTotal website: https://www.virustotal.com
+             Open your browser and go to the official VirusTotal website.
 
 Create an Account or Sign In:
              
